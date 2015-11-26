@@ -24,7 +24,7 @@ module SpotlightIndexerService
 
     config.autoload_paths += %W(#{config.root}/lib)
     config.app_version = VERSION # read from VERSION file at base of website
-    config.app_name = 'SearchWorks-Indexing-Service'
+    config.app_name = 'Spotlight-Indexing-Service'
     config.solr_config_file_path = "#{config.root}/config/solr.yml"
     config.dor_fetcher_url = 'https://dorfetcher-prod.stanford.edu'
   end
