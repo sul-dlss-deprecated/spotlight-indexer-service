@@ -18,6 +18,7 @@ class SpotlightMapper < DiscoveryIndexer::Mapper::GeneralMapper
     solr_doc.update mods_to_pub_date
     solr_doc.update mods_to_others
     solr_doc.update hard_coded_fields
+    solr_doc.update mods_to_phys_loc
 
     solr_doc[:collection] = collection
     solr_doc[:modsxml] = @modsxml.to_xml
@@ -55,7 +56,8 @@ class SpotlightMapper < DiscoveryIndexer::Mapper::GeneralMapper
       author_corp_display: @modsxml.sw_corporate_authors,
       author_meeting_display: @modsxml.sw_meeting_authors,
       author_person_display: @modsxml.sw_person_authors,
-      author_person_full_display: @modsxml.sw_person_authors
+      author_person_full_display: @modsxml.sw_person_authors,
+      author_no_collector_ssim: @modsxml.non_collector_person_authors
     }
   end
 
@@ -102,10 +104,15 @@ class SpotlightMapper < DiscoveryIndexer::Mapper::GeneralMapper
   # @return [Hash] Hash representing some fields
   def mods_to_others
     {
+      collector_ssim: @modsxml.collectors_w_dates,
+      # cartographic coordinates per MODS subject.cartographics.coordinates
+      coordinates: @modsxml.coordinates,
       format_main_ssim: @modsxml.format_main,
       format: @modsxml.format, # for backwards compatibility
+      genre_ssim: @modsxml.term_values(:genre),
       language: @modsxml.sw_language_facet,
       physical: @modsxml.term_values([:physical_description, :extent]),
+      point_bbox: @modsxml.point_bbox,
       summary_search: @modsxml.term_values(:abstract),
       toc_search: @modsxml.term_values(:tableOfContents),
       url_suppl: @modsxml.term_values([:related_item, :location, :url])
@@ -117,6 +124,16 @@ class SpotlightMapper < DiscoveryIndexer::Mapper::GeneralMapper
       url_fulltext: "https://purl.stanford.edu/#{@druid}",
       access_facet: 'Online',
       building_facet: 'Stanford Digital Repository'
+    }
+  end
+
+  # @return [Hash] Hash representing the physical location
+  def mods_to_phys_loc
+    {
+      box_ssi: @modsxml.box,
+      folder_ssi: @modsxml.folder,
+      location_ssi: @modsxml.location,
+      series_ssi: @modsxml.series
     }
   end
 

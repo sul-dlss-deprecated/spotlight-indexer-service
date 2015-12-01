@@ -21,6 +21,9 @@ describe SpotlightMapper do
     item_book_purl_parser = DiscoveryIndexer::InputXml::PurlxmlParserStrict.new('druid:cg160px5426', item_book_public_xml)
     @item_book_purl = item_book_purl_parser.parse
 
+    @item_phys_loc_mods = Stanford::Mods::Record.new
+    @item_phys_loc_mods.from_str(item_phys_loc_mods)
+
     coll_pid = 'druid:aa111bb1111'
     @coll_mods = Stanford::Mods::Record.new
     @coll_mods.from_str(coll_issued_mods)
@@ -47,26 +50,35 @@ describe SpotlightMapper do
         author_7xx_search: ['Personal name'],
         author_corp_display: [],
         author_meeting_display: [],
+        author_no_collector_ssim: ['Personal name'],
         author_other_facet: [],
         author_person_display: ['Personal name'],
         author_person_facet: ['Personal name'],
         author_person_full_display: ['Personal name'],
         author_sort: "\u{10FFFF} Item title",
+        box_ssi: nil,
+        collector_ssim: nil,
+        coordinates: [],
         creation_year_isi: '1909',
         era_facet: nil,
+        folder_ssi: nil,
         format: ['Image'],
         format_main_ssim: ['Image'],
+        genre_ssim: nil,
         geographic_facet: nil,
         geographic_search: nil,
         id: 'zz999zz9999',
         imprint_display: '1909',
         language: [],
+        location_ssi: nil,
         physical: nil,
+        point_bbox: [],
         pub_date: '1909',
         pub_date_display: '1909',
         pub_date_sort: '1909',
         pub_search: nil,
         pub_year_tisim: '1909',
+        series_ssi: nil,
         subject_all_search: nil,
         subject_other_search: nil,
         subject_other_subvy_search: nil,
@@ -119,6 +131,7 @@ describe SpotlightMapper do
                                                  author_sort: @coll_mods.sw_sort_author,
                                                  author_corp_display: @coll_mods.sw_corporate_authors,
                                                  author_meeting_display: @coll_mods.sw_meeting_authors,
+                                                 author_no_collector_ssim: @coll_mods.non_collector_person_authors,
                                                  author_person_display: @coll_mods.sw_person_authors,
                                                  author_person_full_display: @coll_mods.sw_person_authors)
     end
@@ -169,10 +182,14 @@ describe SpotlightMapper do
   describe 'mods_to_others' do
     it 'creates a hash of miscellaneous values for the solr document' do
       mapper = SpotlightMapper.new('zz999zz9999', @coll_mods, @coll_purl)
-      expect(mapper.mods_to_others).to eq(format_main_ssim: @coll_mods.format_main,
+      expect(mapper.mods_to_others).to eq(collector_ssim: nil,
+                                          coordinates: [],
+                                          format_main_ssim: @coll_mods.format_main,
                                           format: @coll_mods.format,
+                                          genre_ssim: @coll_mods.term_values(:genre),
                                           language: @coll_mods.sw_language_facet,
                                           physical: @coll_mods.term_values([:physical_description, :extent]),
+                                          point_bbox: [],
                                           summary_search: @coll_mods.term_values(:abstract),
                                           toc_search: @coll_mods.term_values(:tableOfContents),
                                           url_suppl: @coll_mods.term_values([:related_item, :location, :url]))
@@ -183,9 +200,33 @@ describe SpotlightMapper do
     it 'creates a hash of hard-coded values for the solr document' do
       druid = 'zz999zz9999'
       mapper = SpotlightMapper.new(druid, @coll_mods, @coll_purl)
-      expect(mapper.hard_coded_fields).to eq(url_fulltext: "https://purl.stanford.edu/#{druid}", access_facet: 'Online', building_facet: 'Stanford Digital Repository')
+      expect(mapper.hard_coded_fields).to eq(url_fulltext: "https://purl.stanford.edu/#{druid}",
+                                             access_facet: 'Online',
+                                             building_facet: 'Stanford Digital Repository')
     end
   end
+
+  describe 'mods_to_phys_loc' do
+    describe 'creates a hash of physical location values for the solr document' do
+      it 'has nil values if no physical location data in the record' do
+        druid = 'zz999zz9999'
+        mapper = SpotlightMapper.new(druid, @coll_mods, @coll_purl)
+        expect(mapper.mods_to_phys_loc).to eq(box_ssi: nil,
+                                              folder_ssi: nil,
+                                              location_ssi: nil,
+                                              series_ssi: nil)
+      end
+      it 'has values from physical location data in the record' do
+        druid = 'zz999zz9999'
+        mapper = SpotlightMapper.new(druid, @item_phys_loc_mods, @item_file_purl)
+        expect(mapper.mods_to_phys_loc).to eq(box_ssi: '42A',
+                                              folder_ssi: '24',
+                                              location_ssi: 'Call Number: SC0340, Accession 2005-101, Box: 42A, Folder: 24',
+                                              series_ssi: '2005-101')
+      end
+    end
+  end
+
 
   describe 'positive_int?' do
     let(:mapper) { SpotlightMapper.new('zz999zz9999', @coll_mods, @coll_purl) }
