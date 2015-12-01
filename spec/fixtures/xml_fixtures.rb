@@ -177,6 +177,71 @@ module XmlFixtures
     xml
   end
 
+  def item_phys_loc_mods
+    <<-xml
+    <mods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.loc.gov/mods/v3" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
+         <identifier type="local" displayLabel="Source ID">RBC_QA76.P396FF_5:3</identifier>
+         <typeOfResource>text</typeOfResource>
+         <genre authority="aat" valueURI="http://vocab.getty.edu/aat/300026652">newsletters</genre>
+         <titleInfo>
+             <title>People's Computer Company</title>
+             <partNumber>5:3</partNumber>
+         </titleInfo>
+         <name type="corporate" authority="naf" valueURI="http://id.loc.gov/authorities/names/n77008526">
+             <namePart>People's Computer Company</namePart>
+             <role>
+                 <roleTerm type="text" authority="marcrelator" valueURI="http://id.loc.gov/vocabulary/relators/cre">Creator</roleTerm>
+             </role>
+         </name>
+         <originInfo>
+             <dateIssued encoding="w3cdtf" keyDate="yes">1976-11</dateIssued>
+             <issuance>continuing</issuance>
+         </originInfo>
+         <physicalDescription>
+             <form authority="rdacarrier">volume</form>
+             <extent>1 newsletter</extent>
+             <digitalOrigin>reformatted digital</digitalOrigin>
+             <internetMediaType>image/jpeg</internetMediaType>
+             <internetMediaType>application/pdf</internetMediaType>
+             <location>
+                <physicalLocation>Call Number: SC0340, Accession 2005-101, Box: 42A, Folder: 24</physicalLocation>
+             </location>
+         </physicalDescription>
+         <subject authority="lcsh" valueURI="http://id.loc.gov/authorities/subjects/sh2008101488">
+             <topic>Computer industry--United States--History</topic>
+         </subject>
+         <subject authority="lcsh" valueURI="http://id.loc.gov/authorities/subjects/sh85084825">
+             <topic>Microelectronics industry</topic>
+         </subject>
+         <subject authority="lcsh">
+             <name type="corporate" authority="naf" valueURI="http://id.loc.gov/authorities/names/n77008526">
+                 <namePart>People's Computer Company</namePart>
+             </name>
+         </subject>
+         <language>
+             <languageTerm type="code" authority="iso639-2b">eng</languageTerm>
+         </language>
+         <recordInfo>
+             <languageOfCataloging>
+                 <languageTerm authority="iso639-2b">eng</languageTerm>
+             </languageOfCataloging>
+             <recordContentSource authority="marcorg">CSt</recordContentSource>
+             <recordIdentifier>druid:cg160px5426</recordIdentifier>
+         </recordInfo>
+         <relatedItem type="host">
+             <titleInfo>
+                 <title>People's Computer Company</title>
+             </titleInfo>
+             <identifier type="uri">http://purl.stanford.edu/cj445qq4021</identifier>
+             <typeOfResource collection="yes"/>
+         </relatedItem>
+         <accessCondition type="useAndReproduction">
+             Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Public Services Librarian of the Dept. of Special Collections (http://library.stanford.edu/spc).
+         </accessCondition>
+     </mods>
+    xml
+  end
+
   def item_file_xml
     <<-xml
     <publicObject id="druid:zz999zz9999" published="2015-02-26T14:10:51-08:00">
@@ -388,6 +453,7 @@ module XmlFixtures
         <namePart>Personal Name</namePart>
         <namePart type="date">1884-1938</namePart>
       </name>
+      <genre authority="aat" valueURI="http://vocab.getty.edu/aat/300026652">newsletters</genre>
       <typeOfResource collection="yes" manuscript="yes">mixed material</typeOfResource>
       <originInfo>
         <place>
@@ -443,6 +509,7 @@ module XmlFixtures
         <namePart type="date">1884-1938</namePart>
       </name>
       <typeOfResource collection="yes" manuscript="yes">mixed material</typeOfResource>
+      <genre authority="aat" valueURI="http://vocab.getty.edu/aat/300026652">ephemera</genre>
       <originInfo>
         <place>
           <placeTerm type="code" authority="marccountry">cau</placeTerm>
