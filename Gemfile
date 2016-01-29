@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'base_indexer'
 gem 'dor-fetcher'
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.20'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 4.2'
@@ -31,7 +31,8 @@ group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'lyberteam-capistrano-devel', '~>3'
+  gem 'capistrano-passenger'
+  gem 'dlss-capistrano', '~> 3'
   gem 'capistrano-rvm'
 end
 gem 'coveralls', require: false
