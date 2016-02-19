@@ -132,7 +132,7 @@ class SpotlightMapper < DiscoveryIndexer::Mapper::GeneralMapper
     {
       box_ssi: @modsxml.box,
       folder_ssi: @modsxml.folder,
-      location_ssi: @modsxml.location,
+      location_ssi: @modsxml.physical_location_str,
       series_ssi: @modsxml.series
     }
   end
