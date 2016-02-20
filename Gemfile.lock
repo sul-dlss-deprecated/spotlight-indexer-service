@@ -38,8 +38,8 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.8)
     arel (6.0.3)
-    base_indexer (0.6.1)
-      discovery-indexer (>= 0.10.1)
+    base_indexer (1.0.0)
+      discovery-indexer (~> 1.0.1)
       is_it_working-cbeer
       rails (~> 4.1, >= 4.1.9)
       retries
@@ -76,12 +76,12 @@ GEM
       thor (~> 0.19.1)
       tins (~> 1.6.0)
     diff-lcs (1.2.5)
-    discovery-indexer (0.10.1)
+    discovery-indexer (1.0.1)
       nokogiri
       rest-client
       retries
       rsolr
-      stanford-mods
+      stanford-mods (~> 2.1)
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -211,7 +211,8 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    stanford-mods (1.3.0)
+    stanford-mods (2.1.0)
+      activesupport
       mods (~> 2.0.2)
     term-ansicolor (1.3.2)
       tins (~> 1.0)
@@ -235,7 +236,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  base_indexer
+  base_indexer (~> 1.0)
   capistrano (~> 3.0)
   capistrano-bundler
   capistrano-rails
@@ -255,4 +256,4 @@ DEPENDENCIES
   uglifier
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
