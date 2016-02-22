@@ -1,4 +1,4 @@
-class SpotlightMapper < DiscoveryIndexer::Mapper::GeneralMapper
+class SpotlightMapper < DiscoveryIndexer::GeneralMapper
   # You have access to these instance variables:
   # @druid = object pid (no "druid:" prefix)
   # @modsxml == Stanford::Mods::Record class object (@modsxml.mods_ng_xml == Nokogiri document (for custom parsing)
